@@ -1,0 +1,26 @@
+form {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.error {
+  color: rgb(243, 128, 128);
+  font-size: 12px;
+}
+
+.form button {
+  margin-top: 3px;
+  position: relative;
+  left: 25%;
+  width: 200px;
+}
+
+.forgotPass {
+  text-align: center;
+}
+
+.forgotPass a {
+  color: #f5acbe;
+  border: none;
+  margin-top: 3px;
+}

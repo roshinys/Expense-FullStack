@@ -1,0 +1,34 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  margin-top: 5px;
+}
+
+.headerLinks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.headerLinks svg {
+  padding: 0 7px;
+}
+
+.headerLinks svg:hover {
+  cursor: pointer;
+}
+
+.headerLinks a {
+  text-decoration: none;
+  margin-right: 20px;
+  color: white;
+  border-bottom: 2px solid #ff1e56;
+}
+
+.headerLinks a:hover {
+  cursor: pointer;
+  color: #ff1e56;
+  border-bottom: 2px solid white;
+}

@@ -1,0 +1,14 @@
+.container {
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 15vh;
+  padding: 30px;
+  border: 1px solid white;
+  border-radius: 15px;
+}
+
+h1 {
+  text-align: center;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}

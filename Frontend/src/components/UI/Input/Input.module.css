@@ -1,0 +1,7 @@
+.active {
+  border: 3px solid rgb(243, 128, 128) !important;
+}
+
+.divInput {
+  margin-bottom: 10px;
+}

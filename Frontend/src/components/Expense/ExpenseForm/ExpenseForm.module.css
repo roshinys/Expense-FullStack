@@ -1,0 +1,11 @@
+.expenseForm h3 {
+  text-align: center;
+  border-bottom: 2px solid #fa0240;
+}
+
+.expenseForm button {
+  margin-top: 3px;
+  position: relative;
+  left: 25%;
+  width: 200px;
+}

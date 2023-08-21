@@ -1,0 +1,8 @@
+.tableBorderless > thead > tr > th,
+.tableBorderless > tbody > tr > th,
+.tableBorderless > tfoot > tr > th,
+.tableBorderless > thead > tr > td,
+.tableBorderless > tbody > tr > td,
+.tableBorderless > tfoot > tr > td {
+  border-top: none;
+}
