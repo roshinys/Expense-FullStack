@@ -1,17 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Button from "../../UI/Button/Button";
-import { useNavigate } from "react-router-dom";
 import Input from "../../UI/Input/Input";
 import styles from "./ForgotPass.module.css";
 
 function ForgotPass() {
   const [link, setLink] = useState(null);
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (link) {
-      // Automatically open the link when it's available
       window.open(link, "_blank");
     }
   }, [link]);
@@ -39,7 +36,6 @@ function ForgotPass() {
         if (data?.link) {
           setLink(data.link);
         }
-        // navigate("/login");
       } catch (err) {
         alert(err);
       }
