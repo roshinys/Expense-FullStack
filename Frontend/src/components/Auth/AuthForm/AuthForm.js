@@ -49,37 +49,34 @@ function AuthForm(props) {
     e.preventDefault();
     setIsLoading(true);
     if (userDetail.isValidEmail && userDetail.isValidPassword) {
-      const response = await fetch(
-        `${props.url}${process.env.REACT_APP_FIREBASE_APIKEY}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: userDetail.email,
-            password: userDetail.password,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
+      const response = await fetch(props.url, {
+        method: "POST",
+        body: JSON.stringify({
+          email: userDetail.email,
+          password: userDetail.password,
+          returnSecureToken: true,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
         setError(false);
         setErrorMessage("");
         if (props.login) {
-          const data = await response.json();
-          const token = data.idToken;
-          const uid = data.localId;
-          props.onLogin(token, uid);
+          const token = data.token;
+          const userId = data.userId;
+          const isPremium = data.isPremium;
+          props.onLogin(token, userId, isPremium);
         } else {
           props.onRegister();
         }
       } else {
         setError(true);
-        const data = await response.json();
-        setErrorMessage("Authentication Failed");
-        if (data && data.error && data.error.message) {
-          setErrorMessage(data.error.message);
+        setErrorMessage(data.msg);
+        if (data && data.error && data.error) {
+          setErrorMessage(data.error);
         }
       }
     } else {

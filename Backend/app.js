@@ -11,14 +11,20 @@ app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
 //db
-const Sequelize = require("sequelize");
+// const Sequelize = require("sequelize");
 const sequelize = require("./util/database");
+
+//routes
+const authRoutes = require("./routes/authRoutes.js");
+
+//routes
+app.use("/auth", authRoutes);
 
 sequelize
   .sync()
-  //   .sync({ force: true })
+  // .sync({ force: true })
   .then(() => {
-    app.listen(process.env.PORT, () => {
+    app.listen(8000, () => {
       console.log("server started at port 3000");
     });
   })

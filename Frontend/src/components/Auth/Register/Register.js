@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
-  const url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
+  const url = "http://localhost:8000/auth/postUser";
 
   const registerHandler = () => {
     navigate("/login");
