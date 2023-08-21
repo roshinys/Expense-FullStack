@@ -8,7 +8,6 @@ import { expenseActions } from "../../store/expense-store";
 import ExpensePremium from "./ExpensePremium/ExpensePremium";
 
 function Expense() {
-  const userId = useSelector((state) => state.auth.userId);
   const token = useSelector((state) => state.auth.token);
   const { expenses, totalExpense } = useSelector((state) => state.expense);
   const dispatch = useDispatch();
@@ -41,8 +40,10 @@ function Expense() {
   };
 
   const deleteExpenseHandler = async (expenseId) => {
-    deleteExpense(expenseId, userId);
-    dispatch(expenseActions.deleteExpense({ expenseId }));
+    const isDeleted = deleteExpense(expenseId, token);
+    if (isDeleted) {
+      dispatch(expenseActions.deleteExpense({ expenseId }));
+    }
   };
 
   return (

@@ -16,4 +16,10 @@ router.post(
   expenseControllers.postExpense
 );
 
+router.delete(
+  "/deleteExpense/:expenseId",
+  middleware.authenticate,
+  expenseControllers.deleteExpense
+);
+
 module.exports = router;

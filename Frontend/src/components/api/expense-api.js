@@ -31,7 +31,6 @@ export const getExpense = async (token) => {
         Authorization: token,
       },
     });
-
     const data = await response.json();
     if (!data.success) {
       throw new Error(data.msg);
@@ -43,22 +42,25 @@ export const getExpense = async (token) => {
   }
 };
 
-export const deleteExpense = async (expenseId, userId) => {
+export const deleteExpense = async (expenseId, token) => {
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_FIREBASE_EXPENSEURL}/expenses/${userId}/${expenseId}.json`,
+      `http://localhost:8000/expense/deleteExpense/${expenseId}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application.json",
+          Authorization: token,
         },
       }
     );
-    if (!response.ok) {
-      throw new Error("Error While Deleting Expense");
+    const data = await response.json();
+    if (!data.success) {
+      throw new Error(data.msg);
     }
-    return;
+    return true;
   } catch (err) {
     alert(err);
+    return false;
   }
 };
