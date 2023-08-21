@@ -7,7 +7,7 @@ import styles from "./ExpenseForm.module.css";
 import { useSelector } from "react-redux";
 
 function ExpenseForm(props) {
-  const userId = useSelector((state) => state.auth.userId);
+  const token = useSelector((state) => state.auth.token);
   const [expense, setExpense] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("petrol");
@@ -41,7 +41,7 @@ function ExpenseForm(props) {
         description: description,
         category: category,
       };
-      const expenseId = await addExpense(newExpense, userId);
+      const expenseId = await addExpense(newExpense, token);
       newExpense = { ...newExpense, id: expenseId };
       props.onAddExpense(newExpense);
     } else {

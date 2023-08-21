@@ -1,23 +1,21 @@
-export const addExpense = async (expense, userId) => {
+export const addExpense = async (expense, token) => {
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_FIREBASE_EXPENSEURL}/expenses/${userId}.json`,
-      {
-        method: "POST",
-        body: JSON.stringify(expense),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`http://localhost:8000/expense/postExpense`, {
+      method: "POST",
+      body: JSON.stringify(expense),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     if (!response.ok) {
       throw new Error("Error While Adding Expense");
     }
     const data = await response.json();
-    if (!data || !data.name) {
+    if (!data || !data.success) {
       throw new Error("Something went wrong");
     }
-    const expenseId = data.name;
+    const expenseId = data.expenseId;
     return expenseId;
   } catch (err) {
     alert(err);
