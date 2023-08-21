@@ -22,25 +22,21 @@ export const addExpense = async (expense, token) => {
   }
 };
 
-export const getExpense = async (userId) => {
+export const getExpense = async (token) => {
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_FIREBASE_EXPENSEURL}/expenses/${userId}.json`
-    );
-    if (!response.ok) {
-      throw new Error("Error While Fetching Expense");
-    }
+    const response = await fetch(`http://localhost:8000/expense/getExpense`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+
     const data = await response.json();
-    const expenses = [];
-    for (const key in data) {
-      const expense = {
-        id: key,
-        expense: data[key].expense,
-        description: data[key].description,
-        category: data[key].category,
-      };
-      expenses.push(expense);
+    if (!data.success) {
+      throw new Error(data.msg);
     }
+    const expenses = data?.expenses ? data.expenses : [];
     return expenses;
   } catch (err) {
     alert(err);

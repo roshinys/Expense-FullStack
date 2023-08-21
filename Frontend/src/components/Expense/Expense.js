@@ -9,6 +9,7 @@ import ExpensePremium from "./ExpensePremium/ExpensePremium";
 
 function Expense() {
   const userId = useSelector((state) => state.auth.userId);
+  const token = useSelector((state) => state.auth.token);
   const { expenses, totalExpense } = useSelector((state) => state.expense);
   const dispatch = useDispatch();
   const [editExpense, setEditExpense] = useState({
@@ -20,14 +21,14 @@ function Expense() {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const fetchedExpenses = await getExpense(userId);
-        dispatch(expenseActions.setExpense({ expenses: fetchedExpenses }));
+        const expenses = await getExpense(token);
+        dispatch(expenseActions.setExpense({ expenses }));
       } catch (err) {
         alert(err);
       }
     };
     fetchExpenses();
-  }, [dispatch, userId]);
+  }, [dispatch, token]);
 
   const addExpenseHandler = (newExpense) => {
     dispatch(expenseActions.addExpense({ newExpense: newExpense }));
