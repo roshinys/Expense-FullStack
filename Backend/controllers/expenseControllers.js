@@ -1,4 +1,6 @@
 const Expense = require("../models/Expense");
+const User = require("../models/User");
+const sequelize = require("../util/database");
 
 exports.getExpenses = async (req, res) => {
   try {
@@ -52,5 +54,39 @@ exports.deleteExpense = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(404).json({ msg: "Failed To Delete Expense", success: false });
+  }
+};
+
+exports.getLeaderBoardExpenses = async (req, res) => {
+  try {
+    if (!req.user.isPremium) {
+      return res
+        .status(400)
+        .json({ message: "Not a Premium User", success: false });
+    }
+    const usersWithExpenses = await User.findAll({
+      attributes: ["id", "email"], // Select the columns you need from the User table
+      include: [
+        {
+          model: Expense,
+          attributes: [
+            [sequelize.fn("SUM", sequelize.col("expense")), "totalExpense"], // Calculate total expenses for each user
+          ],
+          as: "expenses", // Alias for the Expense association
+        },
+      ],
+      group: ["User.id"], // Group by User.id to get total expenses for each user
+      order: sequelize.literal('"totalExpense" DESC'), // Order by totalExpense in descending order
+      raw: true, // Use raw queries for the alias in the ORDER BY clause
+    });
+
+    res.status(200).json({
+      success: true,
+      usersWithExpenses,
+      message: "Successfully fetched all users",
+    });
+  } catch (error) {
+    console.error("Error retrieving users with expenses:", error);
+    res.status(500).json({ message: "Error retrieving users with expenses." });
   }
 };

@@ -65,6 +65,26 @@ export const deleteExpense = async (expenseId, token) => {
   }
 };
 
+export const getLeaderBoardDetails = async (token) => {
+  try {
+    const response = await fetch(`http://localhost:8000/expense/leaderboard`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application.json",
+        Authorization: token,
+      },
+    });
+    const data = await response.json();
+    if (!data.success) {
+      throw new Error(data.msg);
+    }
+    return data.usersWithExpenses;
+  } catch (err) {
+    // alert(err);
+    console.log(err);
+  }
+};
+
 export const rzyPayment = async (token, dispatch, setPremium) => {
   try {
     const response = await fetch(

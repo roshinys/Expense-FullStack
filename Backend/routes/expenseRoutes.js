@@ -22,4 +22,10 @@ router.delete(
   expenseControllers.deleteExpense
 );
 
+router.get(
+  "/leaderboard",
+  middleware.authenticate,
+  expenseControllers.getLeaderBoardExpenses
+);
+
 module.exports = router;

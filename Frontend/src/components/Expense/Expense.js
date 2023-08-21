@@ -6,9 +6,12 @@ import { getExpense, deleteExpense } from "../api/expense-api";
 import { useDispatch, useSelector } from "react-redux";
 import { expenseActions } from "../../store/expense-store";
 import ExpensePremium from "./ExpensePremium/ExpensePremium";
+import ExpenseLeaderBoard from "./ExpenseLeaderBoard/ExpenseLeaderBoard";
 
 function Expense() {
   const token = useSelector((state) => state.auth.token);
+  const isPrem = useSelector((state) => state.auth.isPremium);
+  console.log(isPrem);
   const { expenses, totalExpense } = useSelector((state) => state.expense);
   const dispatch = useDispatch();
   const [editExpense, setEditExpense] = useState({
@@ -65,6 +68,7 @@ function Expense() {
           />
         </div>
       </div>
+      {isPrem && <ExpenseLeaderBoard />}
     </>
   );
 }

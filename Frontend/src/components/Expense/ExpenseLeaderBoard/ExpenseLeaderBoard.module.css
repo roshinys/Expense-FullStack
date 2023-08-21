@@ -1,0 +1,40 @@
+.leaderboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+  /* background-color: green; */
+  margin-bottom: 30px;
+}
+
+.leaderboardContainer {
+  display: flex;
+  max-width: 500px;
+  /* background-color: red; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaderboard h1 {
+  text-align: center;
+  border-bottom: 2px solid white;
+  width: 100%;
+}
+.userexpense {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* background-color: green; */
+  margin: 10px 0;
+  width: 300px;
+}
+
+.userexpense h2 {
+  font-size: 18px;
+}
+
+.userexpense span {
+  padding: 0 20px;
+}
