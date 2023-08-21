@@ -110,11 +110,11 @@ function AuthForm(props) {
             onChange={passwordChangeHandler}
           />
           {error && <p className={styles.error}>{errorMessage}</p>}
-          {/* {props.login && (
+          {props.login && (
             <div className={styles.forgotPass}>
               <Link to="/forgotpassword">forgot Password ?</Link>
             </div>
-          )} */}
+          )}
           <Button type="submit">
             {!loading ? `${props.name}` : "Sending Request"}
           </Button>

@@ -1,12 +1,20 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Button from "../../UI/Button/Button";
 import { useNavigate } from "react-router-dom";
 import Input from "../../UI/Input/Input";
 import styles from "./ForgotPass.module.css";
 
 function ForgotPass() {
+  const [link, setLink] = useState(null);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    if (link) {
+      // Automatically open the link when it's available
+      window.open(link, "_blank");
+    }
+  }, [link]);
 
   const resetPassHandler = useCallback(
     async (e) => {
@@ -15,31 +23,28 @@ function ForgotPass() {
         if (email.trim() === 0 || !email.includes("@")) {
           throw new Error("not a valid email address");
         }
-        const response = await fetch(
-          `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${process.env.REACT_APP_FIREBASE_APIKEY}`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              email: email,
-              requestType: "PASSWORD_RESET",
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`http://localhost:8000/forgotpass`, {
+          method: "POST",
+          body: JSON.stringify({
+            email: email,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         if (!response.ok) {
           throw new Error("Error checking email verification");
         }
-        alert("Successfully sent a reset Link");
-        setTimeout(() => {
-          navigate("/login");
-        }, 5000);
+        const data = await response.json();
+        if (data?.link) {
+          setLink(data.link);
+        }
+        // navigate("/login");
       } catch (err) {
         alert(err);
       }
     },
-    [email, navigate]
+    [email]
   );
 
   const emailChangeHanddler = useCallback((value) => {
