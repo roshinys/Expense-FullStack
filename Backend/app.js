@@ -4,14 +4,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const bcrypt = require("bcrypt");
-
 const app = express();
 app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 
 //db
-const Sequelize = require("sequelize");
+// const Sequelize = require("sequelize");
 const sequelize = require("./util/database");
 
 //routes

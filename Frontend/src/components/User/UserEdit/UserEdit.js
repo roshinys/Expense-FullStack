@@ -12,34 +12,25 @@ function UserEdit() {
 
   useEffect(() => {
     async function getUserDetail() {
-      const response = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_APIKEY}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            idToken: token,
-          }),
-          headers: {
-            "Content-Type": "application-json",
-          },
-        }
-      );
+      const response = await fetch(`http://localhost:8000/auth/userDetails/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application-json",
+          Authorization: token,
+        },
+      });
       if (!response.ok) {
         console.log("failed to fetch user detail");
         return;
       }
       const data = await response.json();
-      if (data.users && data.users.length > 0) {
-        nameRef.current.value = data.users[0].displayName
-          ? data.users[0].displayName
-          : "";
-        profileRef.current.value = data.users[0].photoUrl
-          ? data.users[0].photoUrl
-          : "";
+      if (data?.username && data?.imgUrl) {
+        nameRef.current.value = data.username;
+        profileRef.current.value = data.imgUrl;
       }
     }
     getUserDetail();
-  });
+  }, [token]);
 
   const cancelClickHandler = () => {
     nameRef.current.value = "";
@@ -49,29 +40,34 @@ function UserEdit() {
 
   const updateUserHandler = async (e) => {
     e.preventDefault();
+    console.log("update user");
     const imageUrl = profileRef.current.value;
     const name = nameRef.current.value;
-    const response = await fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${process.env.REACT_APP_FIREBASE_APIKEY}`,
-      {
-        method: "POST",
+    const updateDetails = async (imageUrl, name) => {
+      const response = await fetch(`http://localhost:8000/auth/updateUser/`, {
+        method: "PUT",
         body: JSON.stringify({
-          idToken: token,
-          photoUrl: imageUrl,
-          displayName: name,
+          imgUrl: imageUrl,
+          username: name,
         }),
         headers: {
-          "Content-Type": "application-json",
+          "Content-Type": "application/json",
+          Authorization: token,
         },
+      });
+      if (!response.ok) {
+        alert("Failed to update user details");
+        return;
       }
-    );
-    if (!response.ok) {
-      alert("Failed to update user details");
-      return;
-    }
-    const data = await response.json();
-    console.log(data);
-    alert("Successfully updated user details");
+      const data = await response.json();
+      console.log(data);
+      if (data.success) {
+        alert("Successfully updated user details");
+      } else {
+        alert("Failed to update user details");
+      }
+    };
+    await updateDetails(imageUrl, name);
   };
 
   return (
@@ -94,7 +90,7 @@ function UserEdit() {
             ref={profileRef}
           />
         </div>
-        <Button type="submit">"Update Details"</Button>
+        <Button type="submit">Update Details</Button>
       </form>
     </div>
   );

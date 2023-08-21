@@ -65,6 +65,39 @@ exports.getUser = async (req, res) => {
   }
 };
 
+exports.updateUser = async (req, res) => {
+  try {
+    const { username, imgUrl } = req.body;
+    const user = await User.findByPk(req.user.id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found.", success: false });
+    }
+    user.username = username;
+    user.imgUrl = imgUrl;
+    await user.save();
+    res.json({ msg: "Successfully updated user details", success: true });
+  } catch (error) {
+    console.log(err);
+    res.json({ msg: "Failed to update user details", success: false });
+  }
+};
+
+exports.getUserDetails = async (req, res) => {
+  try {
+    return res.json({
+      message: "fetched user detail",
+      success: true,
+      username: req.user.username,
+      imgUrl: req.user.imgUrl,
+    });
+  } catch (error) {
+    console.log(err);
+    res.json({ msg: "Failed to get user details", success: false });
+  }
+};
+
 function generateToken(id) {
   return jwt.sign(id, "monkeydluffy");
 }

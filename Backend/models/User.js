@@ -8,6 +8,14 @@ const User = sequelize.define("user", {
     primaryKey: true,
     autoIncrement: true,
   },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  imgUrl: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
