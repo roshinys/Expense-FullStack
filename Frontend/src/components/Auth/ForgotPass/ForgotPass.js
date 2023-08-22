@@ -20,15 +20,18 @@ function ForgotPass() {
         if (email.trim() === 0 || !email.includes("@")) {
           throw new Error("not a valid email address");
         }
-        const response = await fetch(`http://localhost:8000/forgotpass`, {
-          method: "POST",
-          body: JSON.stringify({
-            email: email,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/forgotpass`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: email,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error("Error checking email verification");
         }

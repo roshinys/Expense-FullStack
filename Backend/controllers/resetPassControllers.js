@@ -41,7 +41,7 @@ exports.forgotpass = async (req, res) => {
     });
     res
       .status(200)
-      .json({ msg: true, link: `http://localhost:8000/resetPass/${id}` });
+      .json({ msg: true, link: `${process.env.URL}/resetPass/${id}` });
   } catch (err) {
     console.log(err);
     res.status(404).json({ success: false, msg: "Sent Email Successfully" });
@@ -62,7 +62,7 @@ exports.resetPass = async (req, res) => {
                                         console.log('called')
                                     }
                                 </script>
-                                <form action="http://localhost:8000/updatepassword/${id}" method="get">
+                                <form action="${process.env.URL}/updatepassword/${id}" method="get">
                                     <label for="newpassword">Enter New password</label>
                                     <input name="newpassword" type="password" required></input>
                                     <button>reset password</button>

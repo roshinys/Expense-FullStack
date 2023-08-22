@@ -1,13 +1,16 @@
 export const addExpense = async (expense, token) => {
   try {
-    const response = await fetch(`http://localhost:8000/expense/postExpense`, {
-      method: "POST",
-      body: JSON.stringify(expense),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/expense/postExpense`,
+      {
+        method: "POST",
+        body: JSON.stringify(expense),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error("Error While Adding Expense");
     }
@@ -24,13 +27,16 @@ export const addExpense = async (expense, token) => {
 
 export const getExpense = async (token) => {
   try {
-    const response = await fetch(`http://localhost:8000/expense/getExpense`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/expense/getExpense`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     const data = await response.json();
     if (!data.success) {
       throw new Error(data.msg);
@@ -45,7 +51,7 @@ export const getExpense = async (token) => {
 export const deleteExpense = async (expenseId, token) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/expense/deleteExpense/${expenseId}`,
+      `${process.env.REACT_APP_BACKEND_URL}/expense/deleteExpense/${expenseId}`,
       {
         method: "DELETE",
         headers: {
@@ -67,13 +73,16 @@ export const deleteExpense = async (expenseId, token) => {
 
 export const getLeaderBoardDetails = async (token) => {
   try {
-    const response = await fetch(`http://localhost:8000/expense/leaderboard`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application.json",
-        Authorization: token,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/expense/leaderboard`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application.json",
+          Authorization: token,
+        },
+      }
+    );
     const data = await response.json();
     if (!data.success) {
       throw new Error(data.msg);
@@ -88,7 +97,7 @@ export const getLeaderBoardDetails = async (token) => {
 export const rzyPayment = async (token, dispatch, setPremium) => {
   try {
     const response = await fetch(
-      "http://localhost:8000/purchase/premiummembership",
+      `${process.env.REACT_APP_BACKEND_URL}/purchase/premiummembership`,
       {
         headers: {
           Authorization: token,
@@ -121,14 +130,17 @@ export const rzyPayment = async (token, dispatch, setPremium) => {
           payment_id: response.razorpay_payment_id,
         };
 
-        fetch("http://localhost:8000/purchase/updatetransactionstatus", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-          body: JSON.stringify(paymentData),
-        })
+        fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/purchase/updatetransactionstatus`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token,
+            },
+            body: JSON.stringify(paymentData),
+          }
+        )
           .then((response) => response.json())
           .then(() => {
             alert("You are a Premium User Now");
