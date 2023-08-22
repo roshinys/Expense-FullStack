@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  node_backend:
+    container_name: expense_backend
+    image: expense-backend:0.0.5
+    build:
+      context: ./Backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - RZRID=rzp_test_1WZqICe9uO1ciI
+      - RZRKEY=U0HNeaHJpnsO9QdvsV0R6ZHS
+      - URL="http://localhost:8000"
+      - DBUSER=roshin
+      - DBPASS=433842
+      - DBHOST=node_db
+    depends_on:
+      - node_db
+
+  node_db:
+    container_name: node_db
+    image: "mysql:5.7"
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=433842
+      - MYSQL_DATABASE=expensetracker
+      - MYSQL_USER=roshin
+      - MYSQL_PASSWORD=433842
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  node_frontend:
+    container_name: expense_frontend
+    image: expense-frontend:0.0.1
+    build:
+      context: ./Frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8000
+    depends_on:
+      - node_backend
+
+volumes:
+  mysql_data: {}

@@ -8,6 +8,7 @@ const authenticate = (req, res, next) => {
     User.findByPk(userid)
       .then((user) => {
         console.log(JSON.stringify(user));
+        console.log("hereee");
         req.user = user;
         next();
       })

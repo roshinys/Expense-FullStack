@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-backend-deployment
+spec:
+  replicas: 1 # You can adjust the number of replicas
+  selector:
+    matchLabels:
+      app: node-backend
+  template:
+    metadata:
+      labels:
+        app: node-backend
+    spec:
+      containers:
+        - name: node-backend
+          image: roshinmsk/node_backend:0.0.5 # Specify the image name and tag
+          ports:
+            - containerPort: 8000

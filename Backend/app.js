@@ -46,7 +46,7 @@ sequelize
   .sync()
   // .sync({ force: true })
   .then(() => {
-    app.listen(8000, () => {
+    app.listen(process.env.PORT, () => {
       console.log("server started at port 8000");
     });
   })
