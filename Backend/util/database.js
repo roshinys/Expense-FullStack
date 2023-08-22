@@ -2,10 +2,10 @@ const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
   "expensetracker",
-  process.env.DBUSER,
-  process.env.DBPASS,
+  "root",
+  "433842",
   {
-    host: process.env.DBHOST,
+    host: "localhost",
     dialect: "mysql",
   }
 );

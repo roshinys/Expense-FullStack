@@ -1,11 +1,10 @@
 const uuid = require("uuid");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const saltRounds = 10;
 
 const User = require("../models/User");
 const ForgotPassword = require("../models/ForgotPass");
-
 exports.updatePass = async (req, res) => {
   try {
     const resetpassid = req.params.id;
