@@ -24,3 +24,10 @@ form {
   border: none;
   margin-top: 3px;
 }
+
+@media (max-width: 768px) {
+  .form button {
+    position: relative;
+    left: 10%;
+  }
+}

@@ -6,3 +6,7 @@
 .tableBorderless > tfoot > tr > td {
   border-top: none;
 }
+
+.expenseHead {
+  display: flex;
+}

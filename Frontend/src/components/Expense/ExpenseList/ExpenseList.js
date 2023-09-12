@@ -9,7 +9,7 @@ function ExpenseList(props) {
       <div className="container">
         <h3>Expense List</h3>
         <table className={`table ${styles.tableBorderless}`}>
-          <thead>
+          <thead className={styles.expenseHead}>
             <tr>
               <th>Expense</th>
               <th>Description</th>

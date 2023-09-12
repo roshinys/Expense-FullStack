@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: expense-frontend-deployment
+  name: node-frontend-deployment
 spec:
   replicas: 1 # Adjust as needed
   selector:
     matchLabels:
-      app: expense-frontend
+      app: node-frontend
   template:
     metadata:
       labels:
-        app: expense-frontend
+        app: node-frontend
     spec:
       containers:
-        - name: expense-frontend
+        - name: node-frontend
           image: roshinmsk/node_frontend:0.0.1
           ports:
             - containerPort: 3000
